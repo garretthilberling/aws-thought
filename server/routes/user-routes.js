@@ -10,6 +10,7 @@ AWS.config.update(awsConfig);
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const table = "Thoughts";
 
+// get all users
 router.get("/users", (req, res) => {
   const params = {
     TableName: table, // 'Thoughts'
@@ -24,6 +25,7 @@ router.get("/users", (req, res) => {
   });
 });
 
+// get single user
 router.get("/users/:username", (req, res) => {
   console.log(`Querying for thought(s) from ${req.params.username}.`);
   const params = {
