@@ -4,7 +4,9 @@ const ThoughtForm = () => {
   const [formState, setFormState] = useState({
     username: "",
     thought: "",
+    image: "",
   });
+  const [image, setImage] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
   // setting initial value to null ensures that the reference to DOM element is current
   const fileInput = useRef(null);
@@ -21,8 +23,11 @@ const ThoughtForm = () => {
           method: 'POST',
           body: data,
         });
+        
         if(!res.ok) throw new Error(res.statusText);
         const postResponse = await res.json();
+        const promisedSetImage = (newImage) => new Promise(() => setImage(newImage));
+        promisedSetImage(postResponse.Location);
         return postResponse.Location;
       } catch (error) {
         console.error(error);
@@ -34,7 +39,7 @@ const ThoughtForm = () => {
   // update state based on form input changes
   const handleChange = (event) => {
     if (event.target.value.length <= 280) {
-      setFormState({ ...formState, [event.target.name]: event.target.value });
+      setFormState({ ...formState, [event.target.name]: event.target.value, image: image });
       setCharacterCount(event.target.value.length);
     }
   };
@@ -54,11 +59,12 @@ const ThoughtForm = () => {
       });
       const data = await res.json();
       console.log(data);
+      console.log(JSON.stringify(formState));
     };
-    postData();
+    postData().then(() => window.location.reload());
 
     // clear form value
-    setFormState({ username: "", thought: "" });
+    setFormState({ username: "", thought: "", image: "" });
     setCharacterCount(0);
   };
 
@@ -88,7 +94,7 @@ const ThoughtForm = () => {
         <label className="form-input col-12  p-1">
           Add an image to your thought:
           <input type="file" ref={fileInput} className="form-input p-2" />
-          <button className="btn" onClick={handleImageUpload} type="submit">
+          <button className="btn" onClick={handleImageUpload}>
             Upload
           </button>
         </label>
