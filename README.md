@@ -19,7 +19,7 @@ Here is a look at how this app functions:
 
 
 ## Installation
-No installation is required to use this application. Simply access via the deployed EC2 Instance: https://ec2-18-223-44-201.us-east-2.compute.amazonaws.com/
+No installation is required to use this application. Simply access via the deployed EC2 Instance: http://ec2-18-223-44-201.us-east-2.compute.amazonaws.com/
 
 ## Questions
 If you have any questions about this project, please contact me via my GitHub: https://github.com/garretthilberling
